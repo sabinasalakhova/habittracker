@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy Wellness Tracker with GitHub Pages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            color: #34495e;
+            margin-bottom: 20px;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .steps {
+            flex: 2;
+            min-width: 300px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #6e8efb;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .step-content {
+            padding-left: 45px;
+        }
+        
+        .code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .terminal {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .side-panel {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .panel-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #6e8efb;
+        }
+        
+        .deploy-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .deploy-button {
+            display: inline-block;
+            background: #6e8efb;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .deploy-button:hover {
+            background: #5a7ce0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tip {
+            background: #e1f5fe;
+            border-left: 4px solid #03a9f4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .success {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 15px;
+        }
+        
+        .faq-question {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .faq-answer {
+            color: #34495e;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Deploy Your Wellness Tracker with GitHub Pages</h1>
+            <p class="description">A step-by-step guide to hosting your wellness tracker for free using GitHub Pages</p>
+        </header>
+        
+        <div class="content">
+            <div class="steps">
+                <div class="step">
+                    <h3 class="step-title"><span class="step-number">1</span>Create a GitHub Account</h3>
+                    <div class="step-content">
+                        <p>If you don't have one already, go to <a href="https://github.com/" target="_blank">github.com</a> and sign up for a free account.</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title"><span class="step-number">2</span>Create a New Repository</h3>
+                    <div class="step-content">
+                        <p>Click the "+" icon in the top right and select "New repository".</p>
+                        <p>Name your repository (e.g., "wellness-tracker").</p>
+                        <p>Make it public (required for free GitHub Pages).</p>
+                        <p>Initialize with a README (optional but recommended).</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title"><span class="step-number">3</span>Upload Your HTML File</h3>
+                    <div class="step-content">
+                        <p>In your new repository, click "Add file" → "Upload files".</p>
+                        <p>Drag and drop your HTML file or choose it from your computer.</p>
+                        <p>Name it <strong>index.html</strong> for it to work as the main page.</p>
+                        <div class="code">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Wellness Tracker&lt;/title&gt;
+    &lt;!-- Your wellness tracker code here --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your wellness tracker content here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title"><span class="step-number">4</span>Enable GitHub Pages</h3>
+                    <div class="step-content">
+                        <p>Go to your repository's Settings tab.</p>
+                        <p>Scroll down to the "GitHub Pages" section.</p>
+                        <p>Under "Source", select the "main" branch (or "master" if that's what you have).</p>
+                        <p>Click "Save".</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title"><span class="step-number">5</span>Access Your Live Website</h3>
+                    <div class="step-content">
+                        <p>Wait a minute or two for GitHub to deploy your site.</p>
+                        <p>Refresh the GitHub Pages section in Settings to see your live URL.</p>
+                        <p>It will follow this pattern: <code>https://[your-username].github.io/[repository-name]</code></p>
+                        <div class="success">
+                            <p><strong>Congratulations!</strong> Your wellness tracker is now live on the internet!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title"><span class="step-number">6</span>Custom Domain (Optional)</h3>
+                    <div class="step-content">
+                        <p>If you have a custom domain, you can add it in the GitHub Pages settings.</p>
+                        <p>You'll also need to configure your DNS settings with your domain registrar.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="side-panel">
+                <h3 class="panel-title">Quick Deploy Options</h3>
+                
+                <div class="deploy-box">
+                    <h4>Direct Upload</h4>
+                    <p>Easiest method for beginners</p>
+                    <a href="https://github.com/new" target="_blank" class="deploy-button">Create Repository</a>
+                </div>
+                
+                <div class="deploy-box">
+                    <h4>GitHub CLI</h4>
+                    <p>For command-line enthusiasts</p>
+                    <div class="terminal">
+        $ git init<br>
+        $ git add .<br>
+        $ git commit -m "Add wellness tracker"<br>
+        $ git branch -M main<br>
+        $ git remote add origin https://github.com/[username]/[repository].git<br>
+        $ git push -u origin main
+                    </div>
+                </div>
+                
+                <div class="tip">
+                    <p><strong>Pro Tip:</strong> Name your HTML file <code>index.html</code> for it to work as the default page.</p>
+                </div>
+                
+                <h3 class="panel-title">FAQ</h3>
+                
+                <div class="faq-item">
+                    <p class="faq-question">How long does it take for my site to go live?</p>
+                    <p class="faq-answer">Usually less than a minute, but it can take up to 10 minutes after you enable GitHub Pages.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Can I use a custom domain?</p>
+                    <p class="faq-answer">Yes, GitHub Pages supports custom domains. You'll need to configure your DNS settings.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Is there a limit to how much I can host?</p>
+                    <p class="faq-answer">GitHub Pages sites have a soft bandwidth limit of 100GB per month and a soft limit of 10 builds per hour.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <p class="faq-question">Can I use JavaScript and CSS?</p>
+                    <p class="faq-answer">Yes, GitHub Pages supports static sites with HTML, CSS, and JavaScript.</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Your wellness tracker will be available at: <code>https://[your-username].github.io/[repository-name]</code></p>
+            <p>Need help? Check out the <a href="https://docs.github.com/en/pages" target="_blank">GitHub Pages documentation</a>.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple script to make code blocks copyable
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('.code, .terminal');
+            
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    const text = this.innerText;
+                    navigator.clipboard.writeText(text).then(() => {
+                        const original = this.innerText;
+                        this.innerText = 'Copied to clipboard!';
+                        
+                        setTimeout(() => {
+                            this.innerText = original;
+                        }, 2000);
+                    });
+                });
+                
+                // Add title to indicate copy functionality
+                block.title = "Click to copy";
+            });
+        });
+    </script>
+</body>
+</html>
