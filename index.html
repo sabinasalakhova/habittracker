@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psychology-Based Habit Tracker</title>
+    <title>Multi-User Habit Tracker</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -17,6 +17,9 @@
             --warning: #fca311;
             --completed: #4ade80;
             --current-day: #ffb4a2;
+            --user-1: #4361ee;
+            --user-2: #e63946;
+            --user-3: #4cc9f0;
         }
         
         * {
@@ -58,6 +61,44 @@
         .date-display {
             font-size: 1.2rem;
             opacity: 0.9;
+        }
+        
+        .user-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--light);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .user-btn.active {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .user-1 {
+            background: var(--user-1);
+            color: white;
+        }
+        
+        .user-2 {
+            background: var(--user-2);
+            color: white;
+        }
+        
+        .user-3 {
+            background: var(--user-3);
+            color: white;
         }
         
         .motivation {
@@ -170,6 +211,7 @@
         .day.future {
             background: #e9ecef;
             color: #6c757d;
+            cursor: not-allowed;
         }
         
         .day:hover:not(.future) {
@@ -254,6 +296,10 @@
             transform: translateY(-2px);
         }
         
+        .reset-btn {
+            background: var(--danger);
+        }
+        
         @media (max-width: 768px) {
             .content {
                 flex-direction: column;
@@ -272,15 +318,26 @@
                 height: 30px;
                 font-size: 0.8rem;
             }
+            
+            .user-section {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-brain"></i> Psychology Habit Tracker</h1>
+            <h1><i class="fas fa-users"></i> Multi-User Habit Tracker</h1>
             <div class="date-display" id="currentDate">Loading date...</div>
         </header>
+        
+        <div class="user-section">
+            <button class="user-btn user-1 active" data-user="user1">User 1</button>
+            <button class="user-btn user-2" data-user="user2">User 2</button>
+            <button class="user-btn user-3" data-user="user3">User 3</button>
+        </div>
         
         <div class="motivation" id="motivationText">
             "Every day, in every way, I'm getting better and better." - Émile Coué
@@ -290,113 +347,12 @@
             <div class="habit-section">
                 <h2 class="section-title">Your Daily Habits</h2>
                 
-                <div class="habit-list">
-                    <div class="habit-item">
-                        <div class="habit-header">
-                            <div class="habit-title">Morning Meditation</div>
-                            <div class="streak-counter">7 day streak</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 80%;"></div>
-                        </div>
-                        <div class="calendar">
-                            <div class="day completed">1</div>
-                            <div class="day completed">2</div>
-                            <div class="day completed">3</div>
-                            <div class="day completed">4</div>
-                            <div class="day completed">5</div>
-                            <div class="day completed">6</div>
-                            <div class="day completed">7</div>
-                            <div class="day current">8</div>
-                            <div class="day future">9</div>
-                            <div class="day future">10</div>
-                            <div class="day future">11</div>
-                            <div class="day future">12</div>
-                            <div class="day future">13</div>
-                            <div class="day future">14</div>
-                        </div>
-                    </div>
-                    
-                    <div class="habit-item">
-                        <div class="habit-header">
-                            <div class="habit-title">Exercise</div>
-                            <div class="streak-counter">5 day streak</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 60%;"></div>
-                        </div>
-                        <div class="calendar">
-                            <div class="day completed">1</div>
-                            <div class="day completed">2</div>
-                            <div class="day completed">3</div>
-                            <div class="day missed">4</div>
-                            <div class="day completed">5</div>
-                            <div class="day completed">6</div>
-                            <div class="day completed">7</div>
-                            <div class="day current">8</div>
-                            <div class="day future">9</div>
-                            <div class="day future">10</div>
-                            <div class="day future">11</div>
-                            <div class="day future">12</div>
-                            <div class="day future">13</div>
-                            <div class="day future">14</div>
-                        </div>
-                    </div>
-                    
-                    <div class="habit-item">
-                        <div class="habit-header">
-                            <div class="habit-title">Reading</div>
-                            <div class="streak-counter">3 day streak</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 40%;"></div>
-                        </div>
-                        <div class="calendar">
-                            <div class="day missed">1</div>
-                            <div class="day missed">2</div>
-                            <div class="day completed">3</div>
-                            <div class="day completed">4</div>
-                            <div class="day completed">5</div>
-                            <div class="day missed">6</div>
-                            <div class="day missed">7</div>
-                            <div class="day current">8</div>
-                            <div class="day future">9</div>
-                            <div class="day future">10</div>
-                            <div class="day future">11</div>
-                            <div class="day future">12</div>
-                            <div class="day future">13</div>
-                            <div class="day future">14</div>
-                        </div>
-                    </div>
-                    
-                    <div class="habit-item">
-                        <div class="habit-header">
-                            <div class="habit-title">No Phone After 10 PM</div>
-                            <div class="streak-counter">2 day streak</div>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 30%;"></div>
-                        </div>
-                        <div class="calendar">
-                            <div class="day missed">1</div>
-                            <div class="day missed">2</div>
-                            <div class="day missed">3</div>
-                            <div class="day missed">4</div>
-                            <div class="day missed">5</div>
-                            <div class="day completed">6</div>
-                            <div class="day completed">7</div>
-                            <div class="day current">8</div>
-                            <div class="day future">9</div>
-                            <div class="day future">10</div>
-                            <div class="day future">11</div>
-                            <div class="day future">12</div>
-                            <div class="day future">13</div>
-                            <div class="day future">14</div>
-                        </div>
-                    </div>
+                <div class="habit-list" id="habitList">
+                    <!-- Habits will be generated here -->
                 </div>
                 
                 <button class="btn" id="addHabitBtn"><i class="fas fa-plus"></i> Add New Habit</button>
+                <button class="btn reset-btn" id="resetBtn"><i class="fas fa-redo"></i> Reset Progress</button>
             </div>
             
             <div class="stats-section">
@@ -405,28 +361,28 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">Completion Rate</div>
-                        <div class="stat-value">72%</div>
+                        <div class="stat-value" id="completionRate">0%</div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 72%;"></div>
+                            <div class="progress-fill" id="completionBar" style="width: 0%;"></div>
                         </div>
                     </div>
                     
                     <div class="stat-card">
                         <div class="stat-label">Current Streak</div>
-                        <div class="stat-value">7 days</div>
+                        <div class="stat-value" id="currentStreak">0 days</div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 70%;"></div>
+                            <div class="progress-fill" id="streakBar" style="width: 0%;"></div>
                         </div>
                     </div>
                     
                     <div class="stat-card">
                         <div class="stat-label">Habits Tracked</div>
-                        <div class="stat-value">4</div>
+                        <div class="stat-value" id="habitsTracked">0</div>
                     </div>
                     
                     <div class="stat-card">
                         <div class="stat-label">Total Check-ins</div>
-                        <div class="stat-value">68</div>
+                        <div class="stat-value" id="totalCheckins">0</div>
                     </div>
                 </div>
                 
@@ -449,12 +405,21 @@
     </div>
 
     <script>
-        // Psychological principles incorporated:
-        // 1. Streak tracking (loss aversion)
-        // 2. Visual progress (progress principle)
-        // 3. Social motivation (quotes from influential figures)
-        // 4. Small wins (celebrating daily completion)
-        // 5. Implementation intention (specific habit tracking)
+        // Default habits structure
+        const defaultHabits = [
+            { id: 'meditation', name: 'Morning Meditation', streak: 0, history: [] },
+            { id: 'exercise', name: 'Exercise', streak: 0, history: [] },
+            { id: 'reading', name: 'Reading', streak: 0, history: [] },
+            { id: 'nophone', name: 'No Phone After 10 PM', streak: 0, history: [] }
+        ];
+        
+        // Initialize user data
+        let currentUser = 'user1';
+        let userData = {
+            user1: { habits: JSON.parse(JSON.stringify(defaultHabits)) },
+            user2: { habits: JSON.parse(JSON.stringify(defaultHabits)) },
+            user3: { habits: JSON.parse(JSON.stringify(defaultHabits)) }
+        };
         
         // Set current date
         const now = new Date();
@@ -503,51 +468,258 @@
             {quote: "Habits are the compound interest of self-improvement.", author: "James Clear"}
         ];
         
-        // Set random motivation text
-        document.getElementById('motivationText').textContent = '"' + motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)] + '"';
+        // Load data from localStorage
+        function loadUserData() {
+            const savedData = localStorage.getItem('habitTrackerData');
+            if (savedData) {
+                userData = JSON.parse(savedData);
+            }
+        }
         
-        // Set random famous quote
-        const randomQuote = famousQuotes[Math.floor(Math.random() * famousQuotes.length)];
-        document.getElementById('dailyQuote').textContent = '"' + randomQuote.quote + '"';
-        document.getElementById('quoteAuthor').textContent = '- ' + randomQuote.author;
+        // Save data to localStorage
+        function saveUserData() {
+            localStorage.setItem('habitTrackerData', JSON.stringify(userData));
+        }
         
-        // Set random psychological tip
-        document.getElementById('psychTip').textContent = '"' + psychTips[Math.floor(Math.random() * psychTips.length)] + '"';
+        // Initialize the app
+        function initApp() {
+            loadUserData();
+            renderHabits();
+            updateStats();
+            setRandomContent();
+            setupEventListeners();
+        }
         
-        // Add event listeners
-        document.getElementById('newTipBtn').addEventListener('click', function() {
+        // Render habits for current user
+        function renderHabits() {
+            const habitList = document.getElementById('habitList');
+            habitList.innerHTML = '';
+            
+            userData[currentUser].habits.forEach(habit => {
+                const habitItem = document.createElement('div');
+                habitItem.className = 'habit-item';
+                
+                // Calculate completed days for progress bar
+                const totalDays = 14;
+                const completedDays = habit.history.filter(day => day.status === 'completed').length;
+                const progressPercent = (completedDays / totalDays) * 100;
+                
+                habitItem.innerHTML = `
+                    <div class="habit-header">
+                        <div class="habit-title">${habit.name}</div>
+                        <div class="streak-counter">${habit.streak} day streak</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${progressPercent}%;"></div>
+                    </div>
+                    <div class="calendar">
+                        ${generateCalendarDays(habit)}
+                    </div>
+                `;
+                
+                habitList.appendChild(habitItem);
+            });
+            
+            // Add click events to calendar days
+            setTimeout(() => {
+                const days = document.querySelectorAll('.day:not(.future)');
+                days.forEach(day => {
+                    day.addEventListener('click', function() {
+                        const habitId = this.getAttribute('data-habit');
+                        const dayNum = this.getAttribute('data-day');
+                        toggleDayStatus(habitId, dayNum);
+                    });
+                });
+            }, 100);
+        }
+        
+        // Generate calendar days for a habit
+        function generateCalendarDays(habit) {
+            let daysHtml = '';
+            const today = new Date();
+            
+            for (let i = 1; i <= 14; i++) {
+                const dayDate = new Date();
+                dayDate.setDate(today.getDate() - (14 - i));
+                
+                const isToday = i === 14;
+                const isFuture = i > 14;
+                
+                // Check if this day is in habit history
+                const dateStr = formatDate(dayDate);
+                const dayData = habit.history.find(d => d.date === dateStr);
+                
+                let dayClass = 'day';
+                if (isToday) dayClass += ' current';
+                else if (isFuture) dayClass += ' future';
+                else if (dayData) dayClass += ` ${dayData.status}`;
+                
+                daysHtml += `<div class="${dayClass}" data-habit="${habit.id}" data-day="${i}">${i}</div>`;
+            }
+            
+            return daysHtml;
+        }
+        
+        // Format date as YYYY-MM-DD
+        function formatDate(date) {
+            return date.toISOString().split('T')[0];
+        }
+        
+        // Toggle day status between completed and missed
+        function toggleDayStatus(habitId, dayNum) {
+            const habit = userData[currentUser].habits.find(h => h.id === habitId);
+            if (!habit) return;
+            
+            const today = new Date();
+            const dayDate = new Date();
+            dayDate.setDate(today.getDate() - (14 - dayNum));
+            const dateStr = formatDate(dayDate);
+            
+            // Find existing entry for this date
+            const existingIndex = habit.history.findIndex(d => d.date === dateStr);
+            
+            if (existingIndex >= 0) {
+                // Toggle status
+                habit.history[existingIndex].status = 
+                    habit.history[existingIndex].status === 'completed' ? 'missed' : 'completed';
+            } else {
+                // Add new entry
+                habit.history.push({
+                    date: dateStr,
+                    status: 'completed'
+                });
+            }
+            
+            // Update streak
+            updateStreak(habit);
+            
+            // Save and re-render
+            saveUserData();
+            renderHabits();
+            updateStats();
+        }
+        
+        // Update streak for a habit
+        function updateStreak(habit) {
+            // Sort history by date descending
+            habit.history.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            let streak = 0;
+            const today = new Date();
+            
+            for (let i = 0; i < habit.history.length; i++) {
+                const historyDate = new Date(habit.history[i].date);
+                const diffTime = today - historyDate;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (i === 0 && diffDays === 0 && habit.history[i].status === 'completed') {
+                    streak = 1;
+                } else if (i > 0 && habit.history[i].status === 'completed') {
+                    const prevDate = new Date(habit.history[i-1].date);
+                    const dayDiff = Math.floor((prevDate - historyDate) / (1000 * 60 * 60 * 24));
+                    
+                    if (dayDiff === 1) {
+                        streak++;
+                    } else {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            
+            habit.streak = streak;
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const habits = userData[currentUser].habits;
+            
+            // Calculate completion rate
+            let totalDays = 0;
+            let completedDays = 0;
+            
+            habits.forEach(habit => {
+                habit.history.forEach(day => {
+                    totalDays++;
+                    if (day.status === 'completed') completedDays++;
+                });
+            });
+            
+            const completionRate = totalDays > 0 ? Math.round((completedDays / totalDays) * 100) : 0;
+            document.getElementById('completionRate').textContent = `${completionRate}%`;
+            document.getElementById('completionBar').style.width = `${completionRate}%`;
+            
+            // Calculate current streak
+            const currentStreak = Math.max(...habits.map(h => h.streak));
+            document.getElementById('currentStreak').textContent = `${currentStreak} days`;
+            document.getElementById('streakBar').style.width = `${Math.min(currentStreak * 10, 100)}%`;
+            
+            // Other stats
+            document.getElementById('habitsTracked').textContent = habits.length;
+            document.getElementById('totalCheckins').textContent = completedDays;
+        }
+        
+        // Set random content
+        function setRandomContent() {
+            document.getElementById('motivationText').textContent = '"' + motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)] + '"';
+            
+            const randomQuote = famousQuotes[Math.floor(Math.random() * famousQuotes.length)];
+            document.getElementById('dailyQuote').textContent = '"' + randomQuote.quote + '"';
+            document.getElementById('quoteAuthor').textContent = '- ' + randomQuote.author;
+            
             document.getElementById('psychTip').textContent = '"' + psychTips[Math.floor(Math.random() * psychTips.length)] + '"';
-        });
+        }
         
-        document.getElementById('addHabitBtn').addEventListener('click', function() {
-            alert('Feature coming soon! In the meantime, keep building your current habits.');
-        });
-        
-        // Calendar day click event
-        const days = document.querySelectorAll('.day:not(.future)');
-        days.forEach(day => {
-            day.addEventListener('click', function() {
-                if (this.classList.contains('completed')) {
-                    this.classList.remove('completed');
-                    this.classList.add('missed');
-                } else if (this.classList.contains('missed')) {
-                    this.classList.remove('missed');
-                } else if (this.classList.contains('current')) {
-                    this.classList.add('completed');
+        // Setup event listeners
+        function setupEventListeners() {
+            // User buttons
+            document.querySelectorAll('.user-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.user-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentUser = this.getAttribute('data-user');
+                    renderHabits();
+                    updateStats();
+                });
+            });
+            
+            // New tip button
+            document.getElementById('newTipBtn').addEventListener('click', function() {
+                document.getElementById('psychTip').textContent = '"' + psychTips[Math.floor(Math.random() * psychTips.length)] + '"';
+            });
+            
+            // Add habit button
+            document.getElementById('addHabitBtn').addEventListener('click', function() {
+                const habitName = prompt('Enter a name for your new habit:');
+                if (habitName && habitName.trim() !== '') {
+                    const newHabit = {
+                        id: 'habit-' + Date.now(),
+                        name: habitName,
+                        streak: 0,
+                        history: []
+                    };
+                    
+                    userData[currentUser].habits.push(newHabit);
+                    saveUserData();
+                    renderHabits();
+                    updateStats();
                 }
             });
-        });
-        
-        // Streak calculation simulation
-        setInterval(() => {
-            const streakCounters = document.querySelectorAll('.streak-counter');
-            streakCounters.forEach(counter => {
-                const currentStreak = parseInt(counter.textContent);
-                if (Math.random() > 0.95) { // Randomly increase streak
-                    counter.textContent = (currentStreak + 1) + ' day streak';
+            
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset all progress for this user?')) {
+                    userData[currentUser].habits = JSON.parse(JSON.stringify(defaultHabits));
+                    saveUserData();
+                    renderHabits();
+                    updateStats();
                 }
             });
-        }, 5000);
+        }
+        
+        // Initialize the app
+        initApp();
     </script>
 </body>
 </html>
